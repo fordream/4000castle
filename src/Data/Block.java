@@ -11,12 +11,12 @@ public class Block implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = -2704515220388222793L;
-	private ImageIcon imageIcon;
+	private String imageIcon;
 	private int tag;
 	
 	
 	// constructors /////////////////////////////////////////////////////
-	public Block( ImageIcon imageIcon, int tag )
+	public Block( String imageIcon, int tag )
 	{
 		setImageIcon( imageIcon );
 		setTag( tag );
@@ -25,12 +25,12 @@ public class Block implements Serializable
 	
 	
 	// getter setter ////////////////////////////////////////////////////
-	public ImageIcon getImageIcon() {
+	public String getImageIcon() {
 		return imageIcon;
 	}
 
 
-	public void setImageIcon(ImageIcon imageIcon) {
+	public void setImageIcon(String imageIcon) {
 		this.imageIcon = imageIcon;
 	}
 

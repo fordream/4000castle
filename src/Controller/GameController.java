@@ -17,25 +17,7 @@ public class GameController
 	
 	
 	
-	// adder remover ///////////////////////////////////////////////
-	public void addOrginMap( Map map ) 
-	{
-		Game game = getGame();
-		ArrayList< Map > originMapList = game.getOriginMapList();
-		originMapList.add( map );
-		game.setOriginMapList( originMapList );
-		setGame( game );
-	}
-	
-	public void removeOrginMap( int index ) 
-	{
-		Game game = getGame();
-		ArrayList< Map > originMapList = game.getOriginMapList();
-		if ( index < originMapList.size() && index >= 0 )
-			originMapList.remove( index );
-		game.setOriginMapList( originMapList );
-		setGame( game );
-	}
+
 	
 	public void addEditMap( Map map ) 
 	{

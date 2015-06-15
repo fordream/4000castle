@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Data.Game;
@@ -14,7 +16,7 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 
 	
 	private final int size = 10;
-	
+	private JLabel picLabel;
 	private int status[][];
 	private JButton mapButton[][];
 
@@ -40,6 +42,10 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 
 		}
 		showMap();
+		
+
+		
+		
 	}
 	public void showMap()
 	{
@@ -51,10 +57,19 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 			{
 				mapButton[i][j] = new JButton();
 				mapButton[i][j].setBackground(Color.WHITE);
+				
 				if(status[i][j] ==1)
-					mapButton[i][j].setBackground(Color.black);
-				if(status[i][j] == 0xff)
+				{
+					mapButton[i][j].setBackground(Color.BLACK);
+					
+				}
+				else if(status[i][j] == 0xff)
+				{
 					mapButton[i][j].setBackground(Color.GRAY);
+				}
+				else
+					mapButton[i][j].setOpaque(false);
+				mapButton[i][j].setBorderPainted(false);
 				mapButton[i][j].setBounds(i*40,j*40,40,40);
 				mapButton[i][j].addActionListener(this);
 
@@ -62,10 +77,15 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 
 			}
 		}
+		picLabel = new JLabel(new ImageIcon("img/board.png")); 
+		picLabel.setBounds(0, 0, 480, 480);
+		this.add(picLabel);
 		
 	}
 	public void removeMap()
 	{
+		
+		this.remove(picLabel);
 		for(int i=0;i<size+2;i++)
 		{
 			for(int j=0;j<size+2;j++)
