@@ -13,21 +13,22 @@ public class TestMain {
 			{ 
 				{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999},
 				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
-				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
 				{999, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,999},
+				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
 				{999, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,999},
-				{999, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,999},
+				{999, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1,999},
 				{999, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,999},
 				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
-				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
+				{999, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0,999},
 				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
 				{999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,999},
 				{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999}
 			};
 		ArrayList< Block > useBlockList = new ArrayList< Block >();
-		useBlockList.add( new Block("", 11) );
-		useBlockList.add( new Block("", 22) );
-		useBlockList.add( new Block("", 33) );
+		useBlockList.add( new Block(null, 11) );
+		useBlockList.add( new Block(null, 22) );
+		useBlockList.add( new Block(null, 33) );
+		useBlockList.add( new Block(null, 44) );
 		
 		map.setStatus(status);
 		map.setUseBlockList(useBlockList);
@@ -40,5 +41,11 @@ public class TestMain {
 				System.out.printf("%5d ", arrayBlock[ yy ][ xx ].getTag());
 			System.out.println();
 		}
+		
+		MapPlay play = new MapPlay( maker );
+		
+		System.out.println( "Block cnt : " + play.getBlockCnt() );
+		System.out.println( "Connectable Cnt : " + play.getConnectableCnt());
+		
 	}
 }
