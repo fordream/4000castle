@@ -3,10 +3,15 @@ package Edit.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import Controller.FileController;
 import Data.Game;
@@ -46,15 +51,16 @@ public class MapEditPanel extends JPanel implements ActionListener
 		
 		setGameData(gameData);
 
-		
-		editButton = new JButton("EDIT");
-		editButton.setBounds(635, 440, 100, 30);
-		editButton.addActionListener(this);
-		this.add(editButton);
+	
 		
 		
-		closeButton = new JButton("BACK");
-		closeButton.setBounds(635, 480, 100, 30);
+		
+		
+		closeButton = new JButton(new ImageIcon("img/pre.png"));
+		closeButton.setBounds(610, 440, 165, 50);
+		closeButton.setBackground(Color.WHITE);
+		closeButton.setOpaque(false);
+		closeButton.setBorderPainted(false);
 		closeButton.addActionListener(this);
 		this.add(closeButton);
 		
@@ -64,7 +70,18 @@ public class MapEditPanel extends JPanel implements ActionListener
 		editBolckPanel = new EditBolckPanel(getGameData());
 		this.add(editBolckPanel);
 		
-	
+	editButton = new JButton(new ImageIcon("img/save.png"));
+		editButton.setBounds(610, 370, 160, 50);
+		editButton.setBackground(Color.WHITE);
+		editButton.setOpaque(false);
+		editButton.setBorderPainted(false);
+		editButton.addActionListener(this);
+		this.add(editButton);
+		
+		JLabel picLabel = new JLabel(new ImageIcon("img/edit(background).png")); 
+		picLabel.setBounds(0, 0, 850, 530);
+		this.add(picLabel);
+		
 	}
 
 
@@ -93,6 +110,16 @@ public class MapEditPanel extends JPanel implements ActionListener
 			System.out.println("mapSize:"+getGameData().getEditMapList().size());
 			
 		
+			
+			FileController fileController = new FileController(gameData);
+			fileController.writeToFile();
+			
+			
+			
+
+			
+
+
 			
 			getMainFrame().remove(this);
 			getMainFrame().repaint();

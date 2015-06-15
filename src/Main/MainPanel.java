@@ -25,7 +25,7 @@ public class MainPanel extends JPanel implements ActionListener
 	private JButton editButton;
 	private JButton closeButton;
 	private JLabel label;
-	Game gameData;
+	private Game gameData;
 	
 	public Game getGameData() {
 		return gameData;
@@ -39,8 +39,11 @@ public class MainPanel extends JPanel implements ActionListener
 		super();
 	
 		this.setMainFrame(mainFrame);
-		this.setBounds(0, 0, 500, 500);
 		setGameData(gameData);
+		
+		this.setBounds(0, 0, 850, 530);
+		
+		
 		
 		
 		
@@ -62,7 +65,11 @@ public class MainPanel extends JPanel implements ActionListener
 		closeButton.setBounds(250, 400, 100, 50);
 		closeButton.addActionListener(this);
 		this.add(closeButton);
-
+		
+		/*
+		FileController fileController = new FileController(gameData);
+		fileController.readFromFile();
+		this.setGameData(fileController.getData());*/
 	}
 
 	@Override
