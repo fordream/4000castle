@@ -40,28 +40,26 @@ public class MapEditPanel extends JPanel implements ActionListener
 		
 		
 		this.setMainFrame(mainFrame);
-		this.setBounds(0, 0, 500, 500);
+		this.setBounds(0, 0, 850, 530);
 		
-		
-		label = new JLabel("edit ");
-		label.setBounds(250, 50, 100, 50);
-		this.add(label);
+		setGameData(gameData);
+
 		
 		editButton = new JButton("EDIT");
-		editButton.setBounds(350, 400, 100, 50);
+		editButton.setBounds(635, 440, 100, 30);
 		editButton.addActionListener(this);
 		this.add(editButton);
 		
 		
 		closeButton = new JButton("BACK");
-		closeButton.setBounds(350, 450, 100, 50);
+		closeButton.setBounds(635, 480, 100, 30);
 		closeButton.addActionListener(this);
 		this.add(closeButton);
 		
 		editFieldMapPanel = new EditFieldMapPanel();
 		this.add(editFieldMapPanel);
 		
-		editBolckPanel = new EditBolckPanel(gameData);
+		editBolckPanel = new EditBolckPanel(getGameData());
 		this.add(editBolckPanel);
 		
 	

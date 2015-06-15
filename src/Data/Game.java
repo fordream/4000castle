@@ -21,11 +21,6 @@ public class Game implements Serializable
 		setEditMapList( new ArrayList< Map >() );
 		setBlockList( new ArrayList< Block >() );
 	}
-
-
-	
-	
-	
 	
 	// getter setter /////////////////////////////////////////////////
 	public ArrayList<Map> getOriginMapList() {

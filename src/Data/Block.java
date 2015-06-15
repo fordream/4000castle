@@ -1,6 +1,9 @@
 package Data;
 
 import java.io.Serializable;
+import java.nio.file.Path;
+
+import javax.swing.ImageIcon;
 
 public class Block implements Serializable
 {
@@ -8,27 +11,27 @@ public class Block implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = -2704515220388222793L;
-	private String imagePath;
+	private ImageIcon imageIcon;
 	private int tag;
 	
 	
 	// constructors /////////////////////////////////////////////////////
-	public Block( String imagePath, int tag )
+	public Block( ImageIcon imageIcon, int tag )
 	{
-		setImagePath( imagePath );
+		setImageIcon( imageIcon );
 		setTag( tag );
 	}
 	
 	
 	
 	// getter setter ////////////////////////////////////////////////////
-	public String getImagePath() {
-		return imagePath;
+	public ImageIcon getImageIcon() {
+		return imageIcon;
 	}
 
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setImageIcon(ImageIcon imageIcon) {
+		this.imageIcon = imageIcon;
 	}
 
 	

@@ -38,6 +38,8 @@ public class MainPanel extends JPanel implements ActionListener
 	
 		this.setMainFrame(mainFrame);
 		this.setBounds(0, 0, 500, 500);
+		setGameData(gameData);
+		
 		
 		label = new JLabel("»çÀü¼º ");
 		label.setBounds(250, 100, 100, 50);
@@ -67,14 +69,14 @@ public class MainPanel extends JPanel implements ActionListener
 		{
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
-			stagePanel = new StagePanel(mainFrame,gameData);
+			stagePanel = new StagePanel(mainFrame,getGameData());
 			getMainFrame().add(stagePanel);
 		}
 		else if(e.getSource() == editButton)
 		{
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
-			mapEditPanel = new MapEditPanel(mainFrame,gameData);
+			mapEditPanel = new MapEditPanel(mainFrame,getGameData());
 			getMainFrame().add(mapEditPanel);
 		}
 		else if(e.getSource() == closeButton)

@@ -14,6 +14,7 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 
 	
 	private final int size = 10;
+	
 	private int status[][];
 	private JButton mapButton[][];
 
@@ -21,7 +22,7 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 
 	EditFieldMapPanel()
 	{
-		this.setBounds(30, 120, 240, 240);
+		this.setBounds(30, 30, 480, 480);
 		this.setBackground(Color.BLACK);
 		mapButton = new JButton[size+2][size+2];
 		status = new int[size+2][size+2];
@@ -54,7 +55,7 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 					mapButton[i][j].setBackground(Color.black);
 				if(status[i][j] == 0xff)
 					mapButton[i][j].setBackground(Color.GRAY);
-				mapButton[i][j].setBounds(i*20,j*20,20,20);
+				mapButton[i][j].setBounds(i*40,j*40,40,40);
 				mapButton[i][j].addActionListener(this);
 
 				this.add(mapButton[i][j]);

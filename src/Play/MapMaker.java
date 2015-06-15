@@ -8,8 +8,8 @@ import Data.*;
 public class MapMaker 
 {
 	private final int size = 10;
-	private final Block emptyBlock = new Block("", 0);
-	private final Block wallBlock = new Block("", 999);
+	private final Block emptyBlock = new Block(null, 0);
+	private final Block wallBlock = new Block(null, 999);
 	
 	private Map map;
 	private Block arrayBlock[][];
