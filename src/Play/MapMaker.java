@@ -72,7 +72,9 @@ public class MapMaker
 		}
 	}
 	
-	
+	public void deletePositionBlock(int x, int y) {
+		arrayBlock[y][x] = emptyBlock;
+	}
 	
 	// getter setter ////////////////////////////////////////////
 	public Map getMap() {
