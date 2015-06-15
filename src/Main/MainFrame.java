@@ -16,7 +16,7 @@ public class MainFrame extends SimpleJFrame
 	
 	
 	public MainFrame() {
-		super("MainFrame", 500, 500);
+		super("MainFrame", 850, 530);
 		
 		mainPanel = new MainPanel(this,gameData);
 		
