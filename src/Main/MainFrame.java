@@ -2,6 +2,7 @@ package Main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Controller.FileController;
 import Data.Game;
 import Edit.GUI.MapEditPanel;
 import Play.GUI.StagePanel;
@@ -18,9 +19,9 @@ public class MainFrame extends SimpleJFrame
 	public MainFrame() {
 		super("MainFrame", 850, 530);
 		gameData = new Game();
+
 		
 		mainPanel = new MainPanel(this,gameData);
-		
 		this.add(mainPanel);
 		
 		

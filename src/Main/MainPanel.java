@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.FileController;
+import Controller.FileController;
 import Data.Game;
 import Edit.GUI.MapEditPanel;
 import Play.GUI.StagePanel;
@@ -41,6 +43,7 @@ public class MainPanel extends JPanel implements ActionListener
 		setGameData(gameData);
 		
 		
+		
 		label = new JLabel("»çÀü¼º ");
 		label.setBounds(250, 100, 100, 50);
 		this.add(label);
@@ -69,14 +72,14 @@ public class MainPanel extends JPanel implements ActionListener
 		{
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
-			stagePanel = new StagePanel(mainFrame,getGameData());
+			stagePanel = new StagePanel(mainFrame,gameData);
 			getMainFrame().add(stagePanel);
 		}
 		else if(e.getSource() == editButton)
 		{
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
-			mapEditPanel = new MapEditPanel(mainFrame,getGameData());
+			mapEditPanel = new MapEditPanel(mainFrame,gameData);
 			getMainFrame().add(mapEditPanel);
 		}
 		else if(e.getSource() == closeButton)
