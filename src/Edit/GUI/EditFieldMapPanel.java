@@ -1,0 +1,119 @@
+package Edit.GUI;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import Data.Game;
+
+public class EditFieldMapPanel extends JPanel implements ActionListener
+{
+
+	
+	private final int size = 10;
+	private int status[][];
+	private JButton mapButton[][];
+
+
+
+	EditFieldMapPanel()
+	{
+		this.setBounds(30, 120, 240, 240);
+		this.setBackground(Color.BLACK);
+		mapButton = new JButton[size+2][size+2];
+		status = new int[size+2][size+2];
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+
+				status[i][j] =0;
+				if(i == 0||i ==size+1||j == 0||j ==size+1)
+				{
+					status[i][j] =0xff;
+				}
+			}
+
+		}
+		showMap();
+	}
+	public void showMap()
+	{
+		
+		
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+				mapButton[i][j] = new JButton();
+				mapButton[i][j].setBackground(Color.WHITE);
+				if(status[i][j] ==1)
+					mapButton[i][j].setBackground(Color.black);
+				if(status[i][j] == 0xff)
+					mapButton[i][j].setBackground(Color.GRAY);
+				mapButton[i][j].setBounds(i*20,j*20,20,20);
+				mapButton[i][j].addActionListener(this);
+
+				this.add(mapButton[i][j]);
+
+			}
+		}
+		
+	}
+	public void removeMap()
+	{
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+				this.remove(mapButton[i][j]);
+			}
+		}
+		this.repaint();
+	}
+	
+
+	public int checkMapOdd()
+	{
+		int sum=0;
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+				 sum+=status[i][j];
+			}
+
+		}
+		if((sum/=2) ==0)
+			return 1;
+		return 0;
+			
+	}
+	public int[][] getStatus() {
+		return status;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+				if(e.getSource() == mapButton[i][j])
+				{
+					if(status[i][j]==1)
+						status[i][j] =0;
+					else if(status[i][j]==0)
+						status[i][j] =1;
+					removeMap();
+					showMap();
+				}
+			}
+		}
+	}
+	
+	
+}
