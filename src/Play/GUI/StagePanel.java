@@ -22,6 +22,7 @@ public class StagePanel extends JPanel implements ActionListener
 	private JLabel label;
 	
 	private MainFrame mainFrame;
+	private Game gameData;
 	
 	public Game getGameData() {
 		return gameData;
@@ -33,7 +34,7 @@ public class StagePanel extends JPanel implements ActionListener
 	}
 
 
-	private Game gameData;
+	
 	
 	public StagePanel(MainFrame mainFrame,Game gameData) {
 		super();

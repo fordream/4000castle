@@ -24,7 +24,7 @@ public class FileController {
 	public FileController(Game data)
 	{
 		setData(data);
-		saveFileName = new String("datafile.ser");
+		saveFileName = new String("datafile.dat");
 	}
 	
 	public Game getData() {
@@ -41,10 +41,7 @@ public class FileController {
 		{
 			FileInputStream fin = new FileInputStream(saveFileName);
 			ObjectInputStream oin = new ObjectInputStream(fin);
-			
-			Game temp = (Game)oin.readObject();
-			
-			setData(temp);
+			setData((Game)oin.readObject());
 			
 			oin.close();
 			fin.close();
@@ -55,31 +52,12 @@ public class FileController {
 		}
 		finally
 		{
-		
+			System.out.println("read"+"block:map"+getData().getBlockList().size()+":"+getData().getEditMapList().size());
+			for(int i =0;i<getData().getBlockList().size();i++)
+				System.out.println(getData().getBlockList().get(i).getImageIcon());
 		}
 	}
-	public void appendToFile()
-	{
-		try
-		{
-			FileOutputStream fout = new FileOutputStream(saveFileName);
-			ObjectOutputStream oout = new ObjectOutputStream(fout);
-			
-			oout.writeObject(getData());
 
-			oout.close();
-			fout.close();
-		}
-		catch(Exception exception)
-		{
-			System.out.println(this.getClass()+"cannot open the file!");
-		}
-		finally
-		{
-		
-		}
-		
-	}
 	public void writeToFile()
 	{
 		try
@@ -98,7 +76,7 @@ public class FileController {
 		}
 		finally
 		{
-		
+			System.out.println("write"+getData().getBlockList().size()+":"+getData().getEditMapList().size());
 		}
 	}
 }
