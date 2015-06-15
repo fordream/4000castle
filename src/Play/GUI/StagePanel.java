@@ -23,11 +23,21 @@ public class StagePanel extends JPanel implements ActionListener
 	
 	private MainFrame mainFrame;
 	
+	public Game getGameData() {
+		return gameData;
+	}
+
+
+	public void setGameData(Game gameData) {
+		this.gameData = gameData;
+	}
+
+
 	private Game gameData;
 	
 	public StagePanel(MainFrame mainFrame,Game gameData) {
 		super();
-		
+		setGameData(gameData);
 		this.setMainFrame(mainFrame);
 		this.setBounds(0, 0, 500, 500);
 	

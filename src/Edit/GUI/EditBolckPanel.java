@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import Data.Block;
 import Data.Game;
@@ -18,6 +20,10 @@ public class EditBolckPanel extends JPanel implements ActionListener{
 
 	private ArrayList<JButton> block;
 	private Game gameData;
+	
+	public ArrayList<Block> getChosedBlockList() {
+		return chosedBlockList;
+	}
 	private ArrayList< Block > chosedBlockList;
 	private JButton addButton;
 	
@@ -52,16 +58,28 @@ public class EditBolckPanel extends JPanel implements ActionListener{
 	public void showBlockList()
 	{
 	
-		int row=0;
+		
 		this.repaint();
+		block.clear();
+		
 		for(int i=0;i<gameData.getBlockList().size();i++)
 		{
+			
 			System.out.println(gameData.getBlockList().get(i).getImageIcon());
 			JButton temp = new JButton(gameData.getBlockList().get(i).getImageIcon());
-			temp.setBounds(0+40*i, 0+40*row, 40, 40);
+			temp.setBounds(0+40*(i%4),0+40*(i/4), 40, 40);
+			temp.setBorder(new LineBorder(Color.WHITE,2));
 			temp.addActionListener(this);
 			this.add(temp);
 			block.add(temp);
+			System.out.println(i);
+		}
+	}
+	public void removeBlockList()
+	{
+		for(int i=0;i<gameData.getBlockList().size()-1;i++)
+		{
+			this.remove(block.get(i));
 		}
 	}
 	
@@ -77,12 +95,9 @@ public class EditBolckPanel extends JPanel implements ActionListener{
 		Block temp = new Block(imageIcon,gameData.getBlockList().size()+1);
 		gameData.getBlockList().add(temp);
 		
+		
 		System.out.println(gameData.getBlockList().size());
-		//System.out.println(imageIcon);
-		
-		
-		
-		
+		removeBlockList();
 		showBlockList();
 		
 	}
@@ -95,14 +110,23 @@ public class EditBolckPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
-
+		
 		for(int i=0;i<gameData.getBlockList().size();i++)
 		{
 			if(e.getSource() == block.get(i))
 			{
-				System.out.println(gameData.getBlockList().get(i).getTag());
-				chosedBlockList.add(gameData.getBlockList().get(i));
-				
+				if(!chosedBlockList.contains(gameData.getBlockList().get(i)))
+				{
+					block.get(i).setBorder( new LineBorder(Color.GREEN,2));
+					chosedBlockList.add(gameData.getBlockList().get(i));
+				}
+				else
+				{
+					chosedBlockList.remove(gameData.getBlockList().get(i));
+					block.get(i).setBorder( new LineBorder(Color.WHITE,2));
+				}
+				System.out.println(gameData.getBlockList().get(i).getTag() +""+ gameData.getBlockList().size()+""+ 
+						chosedBlockList);
 			}
 		}
 

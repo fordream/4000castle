@@ -39,7 +39,7 @@ public class PlayPanel extends JPanel implements ActionListener
 
 	public PlayPanel(MainFrame mainFrame,Game gameData) {
 		super();
-		
+		setGameData(gameData);
 		
 		this.setMainFrame(mainFrame);
 		this.setBounds(0, 0, 500, 500);

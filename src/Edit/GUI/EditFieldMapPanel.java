@@ -115,6 +115,9 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 			}
 		}
 	}
+	public void setStatus(int[][] status) {
+		this.status = status;
+	}
 	
 	
 }

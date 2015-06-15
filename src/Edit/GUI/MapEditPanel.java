@@ -8,7 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.FileController;
 import Data.Game;
+import Data.Map;
 import Main.MainFrame;
 import Main.MainPanel;
 import Play.GUI.StagePanel;
@@ -82,7 +84,21 @@ public class MapEditPanel extends JPanel implements ActionListener
 		
 		if(e.getSource() == editButton)
 		{
+			Map map = new Map();
+			map.setStatus(editFieldMapPanel.getStatus());
+			map.setUseBlockList(editBolckPanel.getChosedBlockList());
+			
+			this.getGameData().getEditMapList().add(map);
 		
+			System.out.println("mapSize:"+getGameData().getEditMapList().size());
+			
+		
+			
+			getMainFrame().remove(this);
+			getMainFrame().repaint();
+			mainPanel = new MainPanel(mainFrame,gameData);
+			getMainFrame().add(mainPanel);
+			return;
 		}
 		else if(e.getSource() == closeButton)
 		{
