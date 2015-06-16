@@ -24,8 +24,10 @@ public class StagePanel extends JPanel implements ActionListener
 	
 	private JButton playButton;
 	private JButton backButton;
-	private JButton mapButton;
-	private ArrayList<JButton> mapButtonList;
+	private JButton stageButton;
+	private ArrayList<JButton> stageButtonList = new ArrayList<JButton>();
+	
+	static final int StageMax = 12;
 	
 	private MainFrame mainFrame;
 	private Game gameData;
@@ -56,7 +58,11 @@ public class StagePanel extends JPanel implements ActionListener
 		backButton.setIcon(new ImageIcon("img/pre (2).png"));
 		backButton.addActionListener(this);
 		this.add(backButton);
-
+		
+		stageButtonMake();
+		stageButtonPrint(1);
+		
+		
 	}
 	
 	public Game getGameData() 
@@ -86,30 +92,56 @@ public class StagePanel extends JPanel implements ActionListener
 		g.drawImage(image, 0, 0, this);
 	}
 	
-	public void mapPrint()
+	public void stageButtonPrint(int page)
+	{
+		page = (page - 1)  * StageMax;
+		
+		for(int i = page; i < this.getGameData().getEditMapList().size(); i++)
+		{
+			stageButtonList.get(i).setBounds(getX(i), getY(i % StageMax), 100, 100);
+			/*stageButtonList.get(i).addActionListener(
+					new ActionListener()
+					{
+						public void actionPerformed
+					});*/
+			this.add(stageButtonList.get(i));
+		}
+	}
+	
+	public void stageButtonMake()
 	{
 		if(this.getGameData().getEditMapList().size() > 0)
 		{
-			for(int i = 0; i < this.getGameData().getEditMapList().size() -1; i++)
+			for(int i = 0; i < this.getGameData().getEditMapList().size(); i++)
 			{
-				
+				stageButton = new JButton();
+				stageButton.setBackground(Color.white);
+				stageButton.setText("스테이지 " + i);
+				stageButtonList.add(stageButton);
 			}
 		}
 	}
 	
-	public void buttonMake()
+	public int getX(int i)
 	{
-		if(this.getGameData().getEditMapList().size() > 0)
+		i = i%4;
+		
+		return 40 + 100*i + 30*i;
+	}
+	
+	public int getY(int i)
+	{
+		if(i < 4)
 		{
-			for(int i = 0; i < this.getGameData().getEditMapList().size() -1; i++)
-			{
-				mapButton = new JButton();
-				mapButton.setBounds(620, 460, 230, 70);
-				mapButton.setBackground(Color.white);
-				mapButton.setOpaque(false);
-				mapButton.setBorderPainted(false);
-				mapButtonList.add(mapButton);
-			}
+			return 110;
+		}
+		else if(i >= 4 && i < 8)
+		{
+			return 240;
+		}
+		else
+		{
+			return 370;
 		}
 	}
 
