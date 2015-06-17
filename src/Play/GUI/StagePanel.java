@@ -27,6 +27,8 @@ public class StagePanel extends JPanel implements ActionListener
 	private JButton stageButton;
 	private ArrayList<JButton> stageButtonList = new ArrayList<JButton>();
 	
+	private JLabel stageNum;
+	
 	static final int StageMax = 12;
 	
 	private MainFrame mainFrame;
@@ -94,17 +96,23 @@ public class StagePanel extends JPanel implements ActionListener
 	
 	public void stageButtonPrint(int page)
 	{
-		page = (page - 1)  * StageMax;
+		int conunt = (page - 1)  * StageMax;
 		
-		for(int i = page; i < this.getGameData().getEditMapList().size(); i++)
+		for(int i = conunt; i < this.getGameData().getEditMapList().size(); i++)
 		{
-			stageButtonList.get(i).setBounds(getX(i), getY(i % StageMax), 100, 100);
-			/*stageButtonList.get(i).addActionListener(
-					new ActionListener()
-					{
-						public void actionPerformed
-					});*/
-			this.add(stageButtonList.get(i));
+			if(i < page * StageMax)
+			{
+				stageButtonList.get(i).setBounds(getX(i), getY(i % StageMax), 110, 100);
+				stageButtonList.get(i).addActionListener(
+						new ActionListener()
+						{
+							public void actionPerformed(ActionEvent event)
+							{
+								
+							}
+						});
+				this.add(stageButtonList.get(i));
+			}
 		}
 	}
 	
@@ -116,7 +124,9 @@ public class StagePanel extends JPanel implements ActionListener
 			{
 				stageButton = new JButton();
 				stageButton.setBackground(Color.white);
-				stageButton.setText("스테이지 " + i);
+				stageButton.setOpaque(false);
+				stageButton.setBorderPainted(false);
+				stageButton.setIcon(new ImageIcon("img/stagebutton.png"));
 				stageButtonList.add(stageButton);
 			}
 		}
@@ -146,7 +156,8 @@ public class StagePanel extends JPanel implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		// TODO Auto-generated method stub
 		
 		if(e.getSource() == playButton)
