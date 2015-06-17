@@ -115,12 +115,7 @@ public class MapEditPanel extends JPanel implements ActionListener
 			fileController.writeToFile();
 			
 			
-			
 
-			
-
-
-			
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
 			mainPanel = new MainPanel(mainFrame,gameData);
