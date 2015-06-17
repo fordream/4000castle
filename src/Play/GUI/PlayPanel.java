@@ -1,4 +1,4 @@
-package Play.GUI;
+package Play.GUI;//construct parameter º¯°æ
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -33,7 +33,7 @@ public class PlayPanel extends JPanel implements ActionListener
 
 
 
-	public PlayPanel(MainFrame mainFrame, Game gameData) {
+	public PlayPanel(MainFrame mainFrame, Game gameData, int index) {
 		super();
 		setGameData(gameData);
 		
