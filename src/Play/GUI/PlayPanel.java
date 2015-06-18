@@ -240,6 +240,9 @@ public class PlayPanel extends JPanel implements ActionListener
 							blockButton[beforeY][beforeX].setOpaque(false);
 							blockButton[beforeY][beforeX].removeAll();
 							
+							play.printStack();
+							play.stackClear();
+							
 							play.deletePositionBlock(xx, yy);
 							play.deletePositionBlock(beforeX, beforeY);
 							play.countBlock();
