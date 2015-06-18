@@ -99,9 +99,10 @@ public class MapEditPanel extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-		if(e.getSource() == editButton)
+		if(e.getSource() == editButton && editFieldMapPanel.checkMapOdd() ==1)
 		{
 			Map map = new Map();
+			editFieldMapPanel.reverse();
 			map.setStatus(editFieldMapPanel.getStatus());
 			map.setUseBlockList(editBolckPanel.getChosedBlockList());
 			
