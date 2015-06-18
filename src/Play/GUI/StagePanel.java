@@ -3,9 +3,11 @@ package Play.GUI;//문섭 변경
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -32,11 +34,11 @@ public class StagePanel extends JPanel implements ActionListener
 	private JTextField bestTime = new JTextField();
 	private JTextField stageNum;
 	
-	private Font font = new Font("a태백산맥", Font.PLAIN ,33);
+	private Font font;
 	
 	static final int StageMax = 12;
 	private int index;
-	private int sec, min;
+	private int time;
 	private int page = 1;
 	
 	private MainFrame mainFrame;
@@ -49,7 +51,19 @@ public class StagePanel extends JPanel implements ActionListener
 		setGameData(gameData);
 		this.setMainFrame(mainFrame);
 		this.setBounds(0, 0, 850, 531);
+		
+		try 
+		{
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("font/afont.ttf")));
+	         
+	    } 
+		catch (Exception ex) 
+		{
+			System.err.println("error: file input stream (font)");
+	    }
 	
+		font.getFont("afont");
 		
 		playButton = new JButton();
 		playButton.setBounds(610, 390, 230, 70);
@@ -96,7 +110,7 @@ public class StagePanel extends JPanel implements ActionListener
 		
 		
 		stageNum = new JTextField();
-		stageNum.setText("스테이지 " + page);
+		stageNum.setText(page+" 페이지 ");
 		stageNum.setFont(font);
 		stageNum.setBounds(240, 470, 200, 50);
 		stageNum.setForeground(Color.WHITE);
@@ -207,10 +221,17 @@ public class StagePanel extends JPanel implements ActionListener
 	
 	public void bestTimePrint(int index)
 	{
-		//sec = this.getGameData().getEditMapList().get(index).getBestTime().getSeconds();
-		//min = this.getGameData().getEditMapList().get(index).getBestTime().getMinutes();
-		//bestTime.setText(sec+":"+min);
-		bestTime.setText(index+":00");
+		time = this.getGameData().getEditMapList().get(index).getBestTime();
+		
+		if(time >= 60)
+		{
+			bestTime.setText(String.format("%02d:%02d",time/60,time%60));
+		}
+		else
+		{
+			bestTime.setText(String.format("00:%02d",time));
+		}
+		
 		bestTime.setFont(font);
 		bestTime.setBounds(680, 320, 100, 50);
 		bestTime.setForeground(Color.WHITE);
@@ -232,6 +253,11 @@ public class StagePanel extends JPanel implements ActionListener
 				this.repaint();
 			}
 		}
+	}
+	
+	public void setFont()
+	{
+		
 	}
 		
 	@Override
@@ -277,12 +303,12 @@ public class StagePanel extends JPanel implements ActionListener
 			{
 				buttonRemove(page);
 				page++;
-				stageNum.setText("스테이지 "+page);
+				stageNum.setText(page+" 페이지");
 				stageButtonPrint(page);
 			}
 			else
 			{
-				stageNum.setText("스테이지 "+stageSize);	
+				stageNum.setText(stageSize+" 페이지");	
 			}
 			
 		}
@@ -292,12 +318,12 @@ public class StagePanel extends JPanel implements ActionListener
 			{
 				buttonRemove(page);
 				page--;
-				stageNum.setText("스테이지 "+page);
+				stageNum.setText(page+" 페이지");
 				stageButtonPrint(page);
 			}
 			else
 			{
-				stageNum.setText("스테이지 1");
+				stageNum.setText("1 페이지");
 			}
 		}
 	}	

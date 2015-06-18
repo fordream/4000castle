@@ -308,7 +308,9 @@ public class PlayPanel extends JPanel implements ActionListener
 			gameData.getEditMapList().get(index).setBestTime(nowSec);
 		}
 		FileController file = new FileController(gameData);
+		System.out.println("data besttime : " + gameData.getEditMapList().get(index).getBestTime());
 		file.writeToFile();
+		this.gameData = file.getData();
 	}
 	
 	
