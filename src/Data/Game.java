@@ -31,8 +31,8 @@ public class Game implements Serializable
 	public void setEditMapList(ArrayList<Map> editMapList) {
 		this.editMapList = editMapList;
 	}
-
-
+	
+	
 	public ArrayList<Block> getBlockList() {
 		return blockList;
 	}
