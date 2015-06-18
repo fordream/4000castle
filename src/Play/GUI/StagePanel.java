@@ -209,7 +209,7 @@ public class StagePanel extends JPanel implements ActionListener
 	{
 		//sec = this.getGameData().getEditMapList().get(index).getBestTime().getSeconds();
 		//min = this.getGameData().getEditMapList().get(index).getBestTime().getMinutes();
-		
+		//bestTime.setText(sec+":"+min);
 		bestTime.setText(index+":00");
 		bestTime.setFont(font);
 		bestTime.setBounds(680, 320, 100, 50);
@@ -237,13 +237,12 @@ public class StagePanel extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 		for(int i = 0; i < this.getGameData().getEditMapList().size(); i++)
 		{
 			if(e.getSource() == stageButtonList.get(i))
 			{
 				bestTimePrint(i);
+				index = i;
 			}
 		}
 		
@@ -265,13 +264,13 @@ public class StagePanel extends JPanel implements ActionListener
 		{
 			int stageSize;
 			
-			if(stageButtonList.size()%12 != 0)
+			if(stageButtonList.size()%StageMax != 0)
 			{
-				stageSize = stageButtonList.size()/12 + 1;
+				stageSize = stageButtonList.size()/StageMax + 1;
 			}
 			else
 			{
-				stageSize = (stageButtonList.size()-1)/12 + 1;
+				stageSize = (stageButtonList.size()-1)/StageMax + 1;
 			}
 			
 			if(page < stageSize)
