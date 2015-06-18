@@ -16,7 +16,7 @@ public class Map implements Serializable
 	// x y는 status[ y ][ x ] 이런 식으로 처리한다.
 	private int status[][];
 	private ArrayList< Block > useBlockList;
-	private Date bestTime;
+	private int bestTime; // 초 단위 값
 	
 	
 	// constructors /////////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ public class Map implements Serializable
 	{
 		status = new int[ size + 2 ][ size + 2 ];
 		setUseBlockList( new ArrayList< Block >() );
-		setBestTime( new Date() );
+		setBestTime( 0 );
 		
 		for (int y = 0; y <= size + 1; y++)
 			for (int x = 9; x <= size + 1; x++)
@@ -39,28 +39,23 @@ public class Map implements Serializable
 		return status;
 	}
 
-
 	public void setStatus(int[][] status) {
 		this.status = status;
 	}
-
 
 	public ArrayList<Block> getUseBlockList() {
 		return useBlockList;
 	}
 
-
 	public void setUseBlockList(ArrayList<Block> useBlockList) {
 		this.useBlockList = useBlockList;
 	}
 
-
-	public Date getBestTime() {
+	public int getBestTime() {
 		return bestTime;
 	}
 
-
-	public void setBestTime(Date bestTime) {
+	public void setBestTime(int bestTime) {
 		this.bestTime = bestTime;
 	}
 }
