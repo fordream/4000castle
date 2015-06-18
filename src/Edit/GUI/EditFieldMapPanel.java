@@ -106,15 +106,16 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 	public int checkMapOdd()
 	{
 		int sum=0;
-		for(int i=0;i<size+2;i++)
+		for(int i=1;i<size+1;i++)
 		{
-			for(int j=0;j<size+2;j++)
+			for(int j=1;j<size+1;j++)
 			{
-				 sum+=status[i][j];
+				 if(status[i][j]!=0)
+					 sum++;
 			}
 
 		}
-		if((sum/=2) ==0)
+		if((sum % 2) ==0)
 			return 1;
 		return 0;
 			
