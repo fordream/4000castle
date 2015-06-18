@@ -1,7 +1,9 @@
 package Play.GUI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -26,13 +28,28 @@ public class LinePanel extends JPanel {
 		super();
 		this.setBounds(0, 0, 480, 480);
 		
+		if(X.size()>=2)
+		{
 		startX = X.get(0);
 		startY = Y.get(0);
-		
+		}
+		if(X.size()>=3)
+		{
+			curve1X = X.get(1);
+			curve1Y = Y.get(1);
+		}
+		if(X.size()>=4)
+		{
+			curve2X = X.get(2);
+			curve2Y = Y.get(2);
+		}
 		reachX = X.get(X.size()-1);
 		reachY = Y.get(Y.size()-1);
 
+		
 
+		
+		/*
 		for(int i=1;X.get(i)!= reachX;i++)
 		{
 			if((X.get(i) - X.get(i-1) != X.get(i+1) - X.get(i))||(Y.get(i) - Y.get(i-1) != Y.get(i+1) - Y.get(i)))
@@ -49,12 +66,15 @@ public class LinePanel extends JPanel {
 				}
 			}
 		}
+		*/
 	}
 
-	public void paintComponent(Graphics g) 
+	public void paintComponent(Graphics g2) 
 	{
 		
+		Graphics2D g = (Graphics2D)g2;
 		g.setColor(Color.RED);
+		g.setStroke(new BasicStroke(4));
 		
 		if(curve1X ==0)
 		{
