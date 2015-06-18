@@ -1,5 +1,7 @@
 package Play;
 
+import java.util.ArrayList;
+
 import Data.Block;
 
 public class MapPlay {
@@ -15,12 +17,17 @@ public class MapPlay {
 	private int connectableCnt;
 	private boolean[][] checkBlock;
 	
+	private ArrayList<Integer> stackX;
+	private ArrayList<Integer> stackY;
+	
 	public MapPlay( MapMaker maker )
 	{
 		setMaker( maker );
 		setArrayBlock( maker.getArrayBlock() );
 		setBlockCnt( 0 );
 		setConnectableCnt( 0 );
+		stackX = new ArrayList<Integer>();
+		stackY = new ArrayList<Integer>();
 		checkBlock = new boolean[size + 2][size + 2];
 		countBlock();
 		countConnectableBlock();
@@ -67,13 +74,18 @@ public class MapPlay {
 					}
 				}
 		
+		stackX.clear();
+		stackY.clear();
 		setConnectableCnt( cnt );
 	}
 	
 	public boolean checkConnectable(int nowX, int nowY, int targetX, int targetY, int nowDir, int cntDir) 
 	{
-		if (nowX == targetX && nowY == targetY)
+		if (nowX == targetX && nowY == targetY) {
+			stackX.add(nowX);
+			stackY.add(nowY);
 			return true;
+		}
 		
 		if (nowX < 0 || nowY < 0 || nowX > size + 1 || nowY > size + 1)
 			return false;
@@ -88,11 +100,19 @@ public class MapPlay {
 		{
 			if (nowDir == dir)
 				flag = checkConnectable(nowX + dirX[ dir ], nowY + dirY[ dir ], targetX, targetY, dir, cntDir);
-			else
+			else {
+				stackX.add(nowX);
+				stackY.add(nowY);
 				flag = checkConnectable(nowX + dirX[ dir ], nowY + dirY[ dir ], targetX, targetY, dir, cntDir + 1);
+			}
 			
 			if (flag == true)
 				return true;
+			
+			if (nowDir != dir) {
+				stackX.remove(stackX.size() - 1);
+				stackY.remove(stackY.size() - 1);
+			}
 		}
 		
 		return false;
@@ -106,6 +126,25 @@ public class MapPlay {
 		for (int y = 0; y <= size + 1; y++)
 			for (int x = 0; x <= size + 1; x++)
 				checkBlock[y][x] = false;
+	}
+	
+	public void stackClear() {
+		stackX.clear();
+		stackY.clear();
+	}
+	
+	public void printStack() {
+		
+		System.out.printf("stackX : ");
+		for (int i = 0; i < stackX.size(); i++)
+			System.out.printf("%2d ", stackX.get(i));
+		
+		System.out.printf("\nstackY : ");
+		for (int i = 0; i < stackY.size(); i++)
+			System.out.printf("%2d ", stackY.get(i));
+		
+		System.out.println();
+		
 	}
 	
 	// getter setter //////////////////////////////////////////////////////////////////////////////////////
@@ -139,5 +178,21 @@ public class MapPlay {
 
 	public void setConnectableCnt(int connectableCnt) {
 		this.connectableCnt = connectableCnt;
+	}
+
+	public ArrayList<Integer> getStackX() {
+		return stackX;
+	}
+
+	public void setStackX(ArrayList<Integer> stackX) {
+		this.stackX = stackX;
+	}
+
+	public ArrayList<Integer> getStackY() {
+		return stackY;
+	}
+
+	public void setStackY(ArrayList<Integer> stackY) {
+		this.stackY = stackY;
 	}
 }
