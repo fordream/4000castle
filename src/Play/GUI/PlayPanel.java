@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 
+import Controller.FileController;
 import Data.Block;
 import Data.Game;
 import Data.Map;
@@ -35,7 +36,8 @@ public class PlayPanel extends JPanel implements ActionListener
 	private final int blockSize = 40;
 	
 	private StagePanel stagePanel;
-
+	private ClearPanel clearPanel;
+	
 	private JPanel playPanel;
 	private JLabel boardLabel;
 	private JLabel timeLabel;
@@ -51,7 +53,9 @@ public class PlayPanel extends JPanel implements ActionListener
 	private Block[][] arrayBlock;
 	private MapMaker maker;
 	private MapPlay play;
+	private int index;
 	
+	private Timer timer;
 	private int nowSec;
 	
 	private int beforeX, beforeY;
@@ -61,6 +65,7 @@ public class PlayPanel extends JPanel implements ActionListener
 		this.setLayout(null);
 		setGameData(gameData);
 		setNowMap(gameData.getEditMapList().get(index));
+		this.index = index;
 		maker = new MapMaker(getNowMap());
 		play = new MapPlay(maker);
 		beforeX = 0;
@@ -135,7 +140,7 @@ public class PlayPanel extends JPanel implements ActionListener
 		
 		// time thread
 		nowSec = 0;
-		Timer timer = new Timer();
+		timer = new Timer();
 		TimerTask task = new TimerTask() {
 			
 			@Override
@@ -209,6 +214,9 @@ public class PlayPanel extends JPanel implements ActionListener
 			for (int xx = 1; xx <= size; xx++)
 				if (e.getSource() == blockButton[yy][xx])
 				{
+					if (xx == beforeX && yy == beforeY)
+						continue;
+					
 					blockButton[beforeY][beforeX].setBorderPainted(false);
 					blockButton[yy][xx].setBorderPainted(true);
 					
@@ -237,6 +245,8 @@ public class PlayPanel extends JPanel implements ActionListener
 							countLabel.setText( String.format("%d", play.getBlockCnt()) );
 							connectLabel.setText( String.format("%d", play.getConnectableCnt()) );
 							
+							
+							
 							beforeX = 0;
 							beforeY = 0;
 							playPanel.repaint();
@@ -255,6 +265,15 @@ public class PlayPanel extends JPanel implements ActionListener
 			getMainFrame().repaint();
 			stagePanel = new StagePanel(mainFrame,gameData);
 			getMainFrame().add(stagePanel);
+		}
+		
+		if (play.getBlockCnt() == 0)
+		{
+			getMainFrame().repaint();
+			timer.cancel();
+			closeButton.removeActionListener(this);
+			clearPanel = new ClearPanel(mainFrame, this, stagePanel, gameData, nowMap, nowSec);
+			setNowMap(nowMap);
 		}
 	}
 	
@@ -283,6 +302,13 @@ public class PlayPanel extends JPanel implements ActionListener
 
 	public void setNowMap(Map nowMap) {
 		this.nowMap = nowMap;
+		if (nowMap.getBestTime() == 0 || nowMap.getBestTime() > nowSec)
+		{
+			nowMap.setBestTime(nowSec);
+			gameData.getEditMapList().get(index).setBestTime(nowSec);
+		}
+		FileController file = new FileController(gameData);
+		file.writeToFile();
 	}
 	
 	
