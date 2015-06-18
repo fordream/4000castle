@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import Data.Game;
 
@@ -60,16 +61,21 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 				
 				if(status[i][j] ==1)
 				{
-					mapButton[i][j].setBackground(Color.BLACK);
 					
+					//mapButton[i][j].setBackground(Color.BLACK);
+					mapButton[i][j].setBorder(new LineBorder(Color.black,5));
+					mapButton[i][j].setOpaque(false);
 				}
 				else if(status[i][j] == 0xff)
 				{
-					mapButton[i][j].setBackground(Color.GRAY);
+					mapButton[i][j].setBackground(Color.RED);
+					mapButton[i][j].setBorderPainted(false);
 				}
 				else
+				{
+					mapButton[i][j].setBorderPainted(false);
 					mapButton[i][j].setOpaque(false);
-				mapButton[i][j].setBorderPainted(false);
+				}
 				mapButton[i][j].setBounds(i*40,j*40,40,40);
 				mapButton[i][j].addActionListener(this);
 
@@ -139,5 +145,19 @@ public class EditFieldMapPanel extends JPanel implements ActionListener
 		this.status = status;
 	}
 	
+	public void reverse()
+	{
+		int [][] temp = new int[size+2][size+2];
+		
+		for(int i=0;i<size+2;i++)
+		{
+			for(int j=0;j<size+2;j++)
+			{
+				temp[j][i] = status[i][j];
+			}
+
+		}
+		setStatus(temp);
+	}
 	
 }
