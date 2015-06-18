@@ -100,7 +100,7 @@ public class MapPlay {
 		{
 			if (nowDir == dir)
 				flag = checkConnectable(nowX + dirX[ dir ], nowY + dirY[ dir ], targetX, targetY, dir, cntDir);
-			else {
+			else if (nowDir % 2 != dir % 2){
 				stackX.add(nowX);
 				stackY.add(nowY);
 				flag = checkConnectable(nowX + dirX[ dir ], nowY + dirY[ dir ], targetX, targetY, dir, cntDir + 1);
@@ -109,7 +109,7 @@ public class MapPlay {
 			if (flag == true)
 				return true;
 			
-			if (nowDir != dir) {
+			if (nowDir % 2 != dir % 2) {
 				stackX.remove(stackX.size() - 1);
 				stackY.remove(stackY.size() - 1);
 			}
