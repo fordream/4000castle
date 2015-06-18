@@ -10,11 +10,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 import Controller.FileController;
 import Data.Game;
@@ -34,8 +36,8 @@ public class StagePanel extends JPanel implements ActionListener
 	
 	private JTextField bestTime = new JTextField();
 	private JTextField stageNum;
-	
-	private Font font;
+	private JTextField miniblock;
+	private ArrayList<JTextField> miniblockList = new ArrayList<JTextField>();
 	
 	static final int StageMax = 12;
 	private int index;
@@ -188,18 +190,6 @@ public class StagePanel extends JPanel implements ActionListener
 		g.drawImage(image, 0, 0, this);
 	}
 	
-	public void stageButtonPrint(int page)
-	{
-		int conunt = (page - 1)  * StageMax;
-		
-		for(int i = conunt; i < this.getGameData().getEditMapList().size(); i++)
-		{
-			if(i < page * StageMax)
-			{
-				this.add(stageButtonList.get(i));
-			}
-		}
-	}
 	
 	public void stageButtonMake()
 	{
@@ -218,8 +208,60 @@ public class StagePanel extends JPanel implements ActionListener
 			}
 		}
 	}
+	public void stageButtonPrint(int page)
+	{
+		int conunt = (page - 1)  * StageMax;
+		
+		for(int i = conunt; i < this.getGameData().getEditMapList().size(); i++)
+		{
+			if(i < page * StageMax)
+			{
+				this.add(stageButtonList.get(i));
+			}
+		}
+	}
+	public void buttonRemove(int page)
+	{
+		int conunt = (page - 1)  * StageMax;
+		
+		for(int i = conunt; i < this.getGameData().getEditMapList().size(); i++)
+		{
+			if(i < page * StageMax)
+			{
+				this.remove(stageButtonList.get(i));
+				this.repaint();
+			}
+		}
+	}
 	
 	
+	public void makeMinimap(int index)
+	{
+		for(int i = 0; i < 12; i++)
+		{
+			for(int j = 0; j < 12; j++)
+			{
+				if(getGameData().getEditMapList().get(index).getStatus()[j][i] >= 1 
+						&& getGameData().getEditMapList().get(index).getStatus()[j][i] != 255 )
+				{
+					miniblock = new JTextField(" ? ");
+					miniblock.setEditable(false);
+					miniblock.setBounds(602 + 20*i, 23 + 20*j, 20, 20);
+					miniblock.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+					miniblockList.add(miniblock);
+					this.add(miniblock);
+				};
+			}
+		}
+	}
+	public void removeMinimap()
+	{
+		for(int i = 0; i < miniblockList.size(); i++)
+		{
+			this.remove(miniblockList.get(i));
+			this.repaint();
+		}
+	}
 	
 	public void bestTimePrint(int index)
 	{
@@ -243,25 +285,6 @@ public class StagePanel extends JPanel implements ActionListener
 		this.add(bestTime);
 	}
 	
-	public void buttonRemove(int page)
-	{
-		int conunt = (page - 1)  * StageMax;
-		
-		for(int i = conunt; i < this.getGameData().getEditMapList().size(); i++)
-		{
-			if(i < page * StageMax)
-			{
-				this.remove(stageButtonList.get(i));
-				this.repaint();
-			}
-		}
-	}
-	
-	public void setFont()
-	{
-		
-	}
-		
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -270,6 +293,8 @@ public class StagePanel extends JPanel implements ActionListener
 			if(e.getSource() == stageButtonList.get(i))
 			{
 				bestTimePrint(i);
+				removeMinimap();
+				makeMinimap(i);
 				index = i;
 			}
 		}
