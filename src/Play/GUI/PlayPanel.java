@@ -241,10 +241,20 @@ public class PlayPanel extends JPanel implements ActionListener
 							blockButton[beforeY][beforeX].removeAll();
 							
 							play.printStack();
+							
+							playPanel.removeAll();
+							LinePanel linePanel = new LinePanel(play.getStackX(),play.getStackY());
+							playPanel.add(linePanel);
+							
+							
+							
 							play.stackClear();
+							
+							
 							
 							play.deletePositionBlock(xx, yy);
 							play.deletePositionBlock(beforeX, beforeY);
+							
 							play.countBlock();
 							play.countConnectableBlock();
 							
