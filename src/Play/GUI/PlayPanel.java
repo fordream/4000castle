@@ -241,16 +241,32 @@ public class PlayPanel extends JPanel implements ActionListener
 							blockButton[beforeY][beforeX].removeAll();
 							
 							play.printStack();
-							
 							playPanel.removeAll();
 							LinePanel linePanel = new LinePanel(play.getStackX(),play.getStackY());
 							playPanel.add(linePanel);
-							
-							
-							
+							for (int y = 0; y <= size + 1; y++)
+								for (int x = 0; x <= size + 1; x++)
+								{
+									if (arrayBlock[y][x].getTag() != 0)
+									{
+										playPanel.add(blockButton[y][x]);
+									}
+								}
+							playPanel.add(boardLabel);
 							play.stackClear();
 							
-							
+							Timer linedeleter = new Timer();
+							TimerTask task = new TimerTask() {
+								
+								@Override
+								public void run() {
+									playPanel.remove(linePanel);
+									playPanel.repaint();
+									linedeleter.cancel();
+								}
+								
+							};
+							linedeleter.schedule(task, 500, 500);
 							
 							play.deletePositionBlock(xx, yy);
 							play.deletePositionBlock(beforeX, beforeY);
