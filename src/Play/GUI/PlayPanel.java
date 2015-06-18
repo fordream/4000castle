@@ -11,44 +11,60 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
+import javax.swing.border.Border;
 
+import Data.Block;
 import Data.Game;
 import Data.Map;
 import Main.MainFrame;
 import Main.MainPanel;
+import Play.MapMaker;
+import Play.MapPlay;
 
 
 public class PlayPanel extends JPanel implements ActionListener
 {
-
+	
+	private final int size = 10;
+	private final int blockSize = 40;
+	
 	private StagePanel stagePanel;
 
 	private JPanel playPanel;
 	private JLabel boardLabel;
 	private JLabel timeLabel;
+	private JLabel countLabel;
+	private JLabel connectLabel;
+	private JButton blockButton[][];
 	private JButton closeButton;
-	
-	
 	
 	private MainFrame mainFrame;
 	
 	private Game gameData;
 	private Map nowMap;
+	private Block[][] arrayBlock;
+	private MapMaker maker;
+	private MapPlay play;
 	
-	private int oldSec;
 	private int nowSec;
-	private Font font;
-
+	
+	private int beforeX, beforeY;
+	
 	public PlayPanel(MainFrame mainFrame, Game gameData, int index) {
 		super();
 		this.setLayout(null);
 		setGameData(gameData);
 		setNowMap(gameData.getEditMapList().get(index));
+		maker = new MapMaker(getNowMap());
+		play = new MapPlay(maker);
+		beforeX = 0;
+		beforeY = 0;
 		
 		// font set ////
 		try {
@@ -65,7 +81,46 @@ public class PlayPanel extends JPanel implements ActionListener
 		playPanel = new JPanel();
 		playPanel.setBounds(25, 25, 480, 480);
 		playPanel.setOpaque(false);
+		playPanel.setLayout(null);
 		
+		arrayBlock = maker.getArrayBlock();
+		blockButton = new JButton[ size + 2 ][ size + 2 ];
+		for (int yy = 0; yy <= size + 1; yy++)
+		{
+			for (int xx = 0; xx <= size + 1; xx++)
+			{
+				System.out.printf("%d ", arrayBlock[yy][xx].getTag());
+				if (arrayBlock[ yy ][ xx ].getTag() == 0xff)
+				{
+					blockButton[yy][xx] = new JButton();
+					blockButton[yy][xx].setBounds(blockSize * xx, blockSize * yy, blockSize, blockSize);
+					blockButton[yy][xx].setText("");
+					blockButton[yy][xx].setBackground(Color.RED);
+					blockButton[yy][xx].setBorderPainted(false);
+					playPanel.add(blockButton[yy][xx]);
+				}
+				else if (arrayBlock[yy][xx].getTag() != 0)
+				{
+					blockButton[yy][xx] = new JButton();
+					blockButton[yy][xx].setBounds(blockSize * xx, blockSize * yy, blockSize, blockSize);
+					blockButton[yy][xx].setText("");
+					blockButton[yy][xx].setIcon(new ImageIcon(arrayBlock[yy][xx].getImageIcon()));
+					blockButton[yy][xx].setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+					blockButton[yy][xx].setBorderPainted(false);
+					blockButton[yy][xx].addActionListener(this);
+					playPanel.add(blockButton[yy][xx]);
+				}
+				else
+				{
+					blockButton[yy][xx] = new JButton();
+					blockButton[yy][xx].setBounds(blockSize * xx, blockSize * yy, blockSize, blockSize);
+					blockButton[yy][xx].setText("");
+					blockButton[yy][xx].setBorderPainted(false);
+					blockButton[yy][xx].setOpaque(false);
+				}
+			}
+			System.out.println();
+		}
 		boardLabel = new JLabel(new ImageIcon("img/board.png"));
 		boardLabel.setBounds(0, 0, 480, 480);
 		playPanel.add(boardLabel);
@@ -105,6 +160,20 @@ public class PlayPanel extends JPanel implements ActionListener
 		};
 		timer.schedule(task, 0, 1000);
 		
+		countLabel = new JLabel();
+		countLabel.setBounds(700, 110, 70, 50);
+		countLabel.setText( String.format( "%d", play.getBlockCnt() ) );
+		countLabel.setFont(new Font("aÅÂ¹é»ê¸Æ", Font.PLAIN, 40));
+		countLabel.setForeground(Color.WHITE);
+		this.add(countLabel);
+		
+		connectLabel = new JLabel();
+		connectLabel.setBounds(700, 173, 70, 50);
+		connectLabel.setText( String.format( "%d", play.getConnectableCnt() ) );
+		connectLabel.setFont(new Font("aÅÂ¹é»ê¸Æ", Font.PLAIN, 40));
+		connectLabel.setForeground(Color.WHITE);
+		this.add(connectLabel); 
+		
 		closeButton = new JButton("BACK");
 		closeButton.setBounds(600, 430, 230, 75);
 		closeButton.setText("");
@@ -114,6 +183,9 @@ public class PlayPanel extends JPanel implements ActionListener
 		closeButton.setIcon(new ImageIcon("img/pre (2).png"));
 		closeButton.addActionListener(this);
 		this.add(closeButton);
+		
+		
+		
 		
 		
 	}
@@ -132,6 +204,50 @@ public class PlayPanel extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		for (int yy = 1; yy <= size; yy++)
+			for (int xx = 1; xx <= size; xx++)
+				if (e.getSource() == blockButton[yy][xx])
+				{
+					blockButton[beforeY][beforeX].setBorderPainted(false);
+					blockButton[yy][xx].setBorderPainted(true);
+					
+					if (arrayBlock[beforeY][beforeX].getTag() == arrayBlock[yy][xx].getTag())
+					{
+						if (play.checkConnectable(xx, yy, beforeX, beforeY, -1, -1))
+						{
+							blockButton[yy][xx].removeActionListener(this);
+							blockButton[yy][xx].setBackground(Color.WHITE);
+							blockButton[yy][xx].setIcon(null);
+							blockButton[yy][xx].setBorderPainted(false);
+							blockButton[yy][xx].setOpaque(false);
+							blockButton[yy][xx].removeAll();
+							blockButton[beforeY][beforeX].removeActionListener(this);
+							blockButton[beforeY][beforeX].setBackground(Color.WHITE);
+							blockButton[beforeY][beforeX].setIcon(null);
+							blockButton[beforeY][beforeX].setBorderPainted(false);
+							blockButton[beforeY][beforeX].setOpaque(false);
+							blockButton[beforeY][beforeX].removeAll();
+							
+							play.deletePositionBlock(xx, yy);
+							play.deletePositionBlock(beforeX, beforeY);
+							play.countBlock();
+							play.countConnectableBlock();
+							
+							countLabel.setText( String.format("%d", play.getBlockCnt()) );
+							connectLabel.setText( String.format("%d", play.getConnectableCnt()) );
+							
+							beforeX = 0;
+							beforeY = 0;
+							playPanel.repaint();
+						}
+					}
+					else
+					{
+						beforeX = xx;
+						beforeY = yy;
+					}
+				}
 		
 		if(e.getSource() == closeButton)
 		{

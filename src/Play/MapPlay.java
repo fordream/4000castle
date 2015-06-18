@@ -31,7 +31,7 @@ public class MapPlay {
 		
 		for (int y = 1; y <= size; y++) 
 			for (int x = 1; x <= size; x++)
-				if (arrayBlock[ y ][ x ].getTag() != 999 &&
+				if (arrayBlock[ y ][ x ].getTag() != 0xff &&
 						arrayBlock[ y ][ x ].getTag() != 0)
 					cnt++;
 		
@@ -46,7 +46,7 @@ public class MapPlay {
 		
 		for (int y = 1; y <= size; y++)
 			for (int x = 1; x <= size; x++)
-				if (arrayBlock[y][x].getTag() != 0 && arrayBlock[y][x].getTag() != 999 && checkBlock[y][x] == false)
+				if (arrayBlock[y][x].getTag() != 0 && arrayBlock[y][x].getTag() != 0xff && checkBlock[y][x] == false)
 				{
 					for (int yy = y; yy <= size; yy++)
 					{

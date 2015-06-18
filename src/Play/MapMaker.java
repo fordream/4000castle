@@ -9,7 +9,7 @@ public class MapMaker
 {
 	private final int size = 10;
 	private final Block emptyBlock = new Block(null, 0);
-	private final Block wallBlock = new Block(null, 999);
+	private final Block wallBlock = new Block(null, 0xff);
 	
 	private Map map;
 	private Block arrayBlock[][];
@@ -39,7 +39,7 @@ public class MapMaker
 				{
 					arrayBlock[ y ][ x ] = emptyBlock;
 				}
-				else if ( getMap().getStatus()[ y ][ x ] == 999 )
+				else if ( getMap().getStatus()[ y ][ x ] == 0xff )
 				{
 					arrayBlock[ y ][ x ] = wallBlock;
 				}
