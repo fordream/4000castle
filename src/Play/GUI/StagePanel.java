@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.FileController;
 import Data.Game;
 import Main.MainFrame;
 import Main.MainPanel;
@@ -52,6 +53,9 @@ public class StagePanel extends JPanel implements ActionListener
 		this.setMainFrame(mainFrame);
 		this.setBounds(0, 0, 850, 531);
 		
+		for (int i = 0; i < gameData.getEditMapList().size(); i++)
+			System.out.println("stage panel besttime " + gameData.getEditMapList().get(i).getBestTime());
+		
 		try 
 		{
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -62,8 +66,6 @@ public class StagePanel extends JPanel implements ActionListener
 		{
 			System.err.println("error: file input stream (font)");
 	    }
-	
-		font.getFont("afont");
 		
 		playButton = new JButton();
 		playButton.setBounds(610, 390, 230, 70);
@@ -111,8 +113,8 @@ public class StagePanel extends JPanel implements ActionListener
 		
 		stageNum = new JTextField();
 		stageNum.setText(page+" 페이지 ");
-		stageNum.setFont(font);
-		stageNum.setBounds(240, 470, 200, 50);
+		stageNum.setFont(new Font("a태백산맥", Font.TRUETYPE_FONT, 40));
+		stageNum.setBounds(230, 465, 200, 50);
 		stageNum.setForeground(Color.WHITE);
 		stageNum.setOpaque(false);
 		stageNum.setEditable(false);
@@ -232,7 +234,7 @@ public class StagePanel extends JPanel implements ActionListener
 			bestTime.setText(String.format("00:%02d",time));
 		}
 		
-		bestTime.setFont(font);
+		bestTime.setFont(new Font("a태백산맥", Font.TRUETYPE_FONT, 35));
 		bestTime.setBounds(680, 320, 100, 50);
 		bestTime.setForeground(Color.WHITE);
 		bestTime.setOpaque(false);
@@ -271,9 +273,10 @@ public class StagePanel extends JPanel implements ActionListener
 				index = i;
 			}
 		}
-		
 		if(e.getSource() == playButton)
 		{
+			for (int i = 0; i < gameData.getEditMapList().size(); i++)
+				System.out.println("stage panel besttime " + gameData.getEditMapList().get(i).getBestTime());
 			getMainFrame().remove(this);
 			getMainFrame().repaint();
 			playPanel = new PlayPanel(mainFrame,gameData,index);//index는 stageButtonPrint에서 사용

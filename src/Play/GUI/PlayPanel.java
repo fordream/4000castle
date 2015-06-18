@@ -1,6 +1,7 @@
 package Play.GUI;//construct parameter º¯°æ
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Color;
@@ -64,14 +65,16 @@ public class PlayPanel extends JPanel implements ActionListener
 		super();
 		this.setLayout(null);
 		setGameData(gameData);
-		setNowMap(gameData.getEditMapList().get(index));
+		this.nowMap = gameData.getEditMapList().get(index);
 		this.index = index;
 		maker = new MapMaker(getNowMap());
 		play = new MapPlay(maker);
 		beforeX = 0;
 		beforeY = 0;
 		
-		// font set ////
+		System.out.println("play data besttime index " + index + " : " + nowMap.getBestTime());
+		
+		// font set /////////////
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("font/afont.ttf")));
@@ -222,7 +225,7 @@ public class PlayPanel extends JPanel implements ActionListener
 					
 					if (arrayBlock[beforeY][beforeX].getTag() == arrayBlock[yy][xx].getTag())
 					{
-						if (play.checkConnectable(xx, yy, beforeX, beforeY, -1, -1))
+						if (play.checkConnectable(xx, yy, beforeX, beforeY, -1, 0))
 						{
 							blockButton[yy][xx].removeActionListener(this);
 							blockButton[yy][xx].setBackground(Color.WHITE);
@@ -251,6 +254,11 @@ public class PlayPanel extends JPanel implements ActionListener
 							beforeY = 0;
 							playPanel.repaint();
 						}
+						else 
+						{
+							beforeX = xx;
+							beforeY = yy;
+						}
 					}
 					else
 					{
@@ -272,8 +280,9 @@ public class PlayPanel extends JPanel implements ActionListener
 			getMainFrame().repaint();
 			timer.cancel();
 			closeButton.removeActionListener(this);
-			clearPanel = new ClearPanel(mainFrame, this, stagePanel, gameData, nowMap, nowSec);
 			setNowMap(nowMap);
+			clearPanel = new ClearPanel(mainFrame, this, stagePanel, gameData, nowMap, nowSec);
+			
 		}
 	}
 	
@@ -304,13 +313,18 @@ public class PlayPanel extends JPanel implements ActionListener
 		this.nowMap = nowMap;
 		if (nowMap.getBestTime() == 0 || nowMap.getBestTime() > nowSec)
 		{
+			System.out.println("11111111111 " + nowMap.getBestTime() + " " + nowSec);
 			nowMap.setBestTime(nowSec);
-			gameData.getEditMapList().get(index).setBestTime(nowSec);
+			ArrayList<Map> temp = gameData.getEditMapList();
+			Map tempMap = temp.get(index);
+			tempMap.setBestTime(nowSec);
+			temp.set(index, tempMap);
+			gameData.setEditMapList(temp);
+			System.out.println(nowMap.getBestTime());
 		}
 		FileController file = new FileController(gameData);
 		System.out.println("data besttime : " + gameData.getEditMapList().get(index).getBestTime());
 		file.writeToFile();
-		this.gameData = file.getData();
 	}
 	
 	

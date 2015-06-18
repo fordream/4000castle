@@ -43,6 +43,7 @@ public class ClearPanel extends JPanel implements ActionListener
 		this.gameData = gameData;
 		this.nowMap = nowMap;
 		
+		System.out.println(nowMap.getBestTime());
 		mainFrame.remove(playPanel);
 		mainFrame.repaint();
 		mainFrame.add(this);
@@ -70,21 +71,18 @@ public class ClearPanel extends JPanel implements ActionListener
 		clearLabel.setForeground(Color.WHITE);
 		this.add(clearLabel);
 		
-		if (nowMap.getBestTime() == 0 || nowMap.getBestTime() > clearSec)
-			nowMap.setBestTime(clearSec);
-		
-		System.out.println(nowMap.getBestTime());
-		
-		min = nowMap.getBestTime() / 60;
-		sec = nowMap.getBestTime() % 60;
-		if (min < 10)
-			minStr = "0" + min;
-		else
-			minStr = String.format("%d", min);
-		if (sec < 10)
-			secStr = "0" + sec;
-		else
-			secStr = String.format("%d", sec);
+		if (nowMap.getBestTime() < clearSec || nowMap.getBestTime() != 0) {
+			min = nowMap.getBestTime() / 60;
+			sec = nowMap.getBestTime() % 60;
+			if (min < 10)
+				minStr = "0" + min;
+			else
+				minStr = String.format("%d", min);
+			if (sec < 10)
+				secStr = "0" + sec;
+			else
+				secStr = String.format("%d", sec);
+		}
 		
 		bestLabel = new JLabel();
 		bestLabel.setBounds(375, 310, 120, 50);

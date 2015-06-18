@@ -57,7 +57,7 @@ public class MapPlay {
 						for (int xx = startX; xx <= size; xx++)
 							if (arrayBlock[y][x].getTag() == arrayBlock[yy][xx].getTag() && 
 									checkBlock[yy][xx] == false && checkBlock[y][x] == false)
-								if (checkConnectable(x, y, xx, yy, -1, -1))
+								if (checkConnectable(x, y, xx, yy, -1, 0))
 								{
 									cnt += 2;
 									checkBlock[y][x] = true;
